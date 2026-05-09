@@ -8,39 +8,55 @@ type Project = {
   problem: string; features: string[]; tech: string[];
   Icon: React.ComponentType<{ className?: string }>;
   accent: string;
+  link: string;       // <-- Add a "link" property
+  locked?: boolean;   // <-- optional lock status (for demo, all are open except flag)
 };
 
 const projects: Project[] = [
-  { title: "EduOne School Management System", category: "Education", tag: "School", Icon: GraduationCap,
+  { title: "E-Nyanzvi School Management System", category: "Education", tag: "School", Icon: GraduationCap,
     problem: "Schools struggling with paper-based records, fees and result tracking.",
     features: ["Students & staff portal","Fees & invoicing","Results & report cards","Parent communication"],
     tech: ["React","Node.js","MongoDB","Express"],
-    accent: "from-blue-500/40 to-cyan-400/40" },
-  { title: "EventFlow Management Platform", category: "Events", tag: "Events", Icon: CalendarDays,
+    accent: "from-blue-500/40 to-cyan-400/40", 
+    link: "https://e-nyanzvi.vercel.app/", 
+  },
+  { title: "EventPro365 Management Platform", category: "Events", tag: "Events", Icon: CalendarDays,
     problem: "Organisers losing time on manual ticketing and registrations.",
     features: ["Ticket sales","QR check-in","Live analytics","Email/SMS automation"],
     tech: ["React","Node.js","MongoDB","REST API"],
-    accent: "from-fuchsia-500/40 to-pink-400/40" },
-  { title: "EstateHub Property Management", category: "Real Estate", tag: "Property", Icon: Building2,
+    accent: "from-fuchsia-500/40 to-pink-400/40",
+    link: "https://eventspro365.vercel.app/",
+  },
+  { title: "Property365 Property Management", category: "Real Estate", tag: "Property", Icon: Building2,
     problem: "Landlords juggling tenants, leases and maintenance manually.",
     features: ["Tenant onboarding","Rent collection","Maintenance tracking","Owner dashboards"],
     tech: ["React","Express","MongoDB"],
-    accent: "from-emerald-500/40 to-teal-400/40" },
+    accent: "from-emerald-500/40 to-teal-400/40",
+    link: "https://property365v2-z17t.vercel.app/",
+  },
   { title: "OrgConnect Organisation System", category: "Organisations", tag: "Org", Icon: Users,
     problem: "Churches and institutions needing unified member & comms portals.",
     features: ["Member directory","Events & giving","Bulk messaging","Role-based access"],
     tech: ["React","Node.js","MongoDB"],
-    accent: "from-amber-500/40 to-orange-400/40" },
+    accent: "from-amber-500/40 to-orange-400/40",
+    link: "#",
+    locked: true
+  },
   { title: "BizCore Business Management", category: "Business", tag: "Business", Icon: Briefcase,
     problem: "SMEs running on spreadsheets across sales, stock and HR.",
     features: ["Sales & invoicing","Inventory","HR & payroll","Reports & insights"],
     tech: ["React","Express","MongoDB"],
-    accent: "from-violet-500/40 to-indigo-400/40" },
+    accent: "from-violet-500/40 to-indigo-400/40",
+    link: "#",
+    locked: true
+  },
   { title: "Brand Corporate Websites", category: "Web", tag: "Web", Icon: Globe,
     problem: "Brands without a credible, conversion-focused web presence.",
     features: ["Custom UI/UX","SEO optimised","CMS ready","Analytics"],
     tech: ["React","Tailwind","Node.js"],
-    accent: "from-cyan-500/40 to-sky-400/40" },
+    accent: "from-cyan-500/40 to-sky-400/40",
+    link: "http://guardianadvisory.co.zw/",
+  },
 ];
 
 const filters = ["All", ...Array.from(new Set(projects.map((p) => p.category)))];
@@ -125,12 +141,31 @@ export function Projects() {
                   </div>
 
                   <div className="mt-5 flex gap-2">
-                    <a href="#contact" className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-full gradient-primary px-3 py-2 text-xs font-medium text-primary-foreground shadow-glow">
+                    {/* "Live Demo" links to the actual project if not locked, otherwise to contact */}
+                    <a
+                      href={p.locked ? "#contact" : p.link}
+                      target={p.locked ? undefined : "_blank"}
+                      rel={p.locked ? undefined : "noopener noreferrer"}
+                      className={`inline-flex flex-1 items-center justify-center gap-1.5 rounded-full gradient-primary px-3 py-2 text-xs font-medium text-primary-foreground shadow-glow ${p.locked ? "opacity-50 cursor-not-allowed" : ""}`}
+                      tabIndex={0}
+                    >
                       <ExternalLink className="h-3.5 w-3.5" /> Live Demo
                     </a>
-                    <a href="#contact" className="glass inline-flex flex-1 items-center justify-center gap-1.5 rounded-full px-3 py-2 text-xs font-medium hover:bg-secondary">
-                      <Lock className="h-3.5 w-3.5" /> Request Access
-                    </a>
+                    {/* Show "Request Access" if locked, otherwise show "Visit Site" as a secondary link */}
+                    {p.locked ? (
+                      <a href="#contact" className="glass inline-flex flex-1 items-center justify-center gap-1.5 rounded-full px-3 py-2 text-xs font-medium hover:bg-secondary">
+                        <Lock className="h-3.5 w-3.5" /> Request Access
+                      </a>
+                    ) : (
+                      <a
+                        href={p.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="glass inline-flex flex-1 items-center justify-center gap-1.5 rounded-full px-3 py-2 text-xs font-medium hover:bg-secondary"
+                      >
+                        <ExternalLink className="h-3.5 w-3.5" /> Visit Site
+                      </a>
+                    )}
                   </div>
                 </div>
               </motion.article>
