@@ -1,45 +1,7 @@
 {
   "version": 2,
-  "routes": [
-    {
-      "src": "^/static/(.*)",
-      "dest": "/static/$1"
-    },
-    {
-      "src": "^/favicon.ico",
-      "dest": "/favicon.ico"
-    },
-    {
-      "src": "^/manifest.json",
-      "dest": "/manifest.json"
-    },
-    {
-      "src": "^/robots.txt",
-      "dest": "/robots.txt"
-    },
-    {
-      "src": "^/assets/(.*)",
-      "dest": "/assets/$1"
-    },
-    {
-      "src": "^/resources/(.*)",
-      "dest": "/resources/$1"
-    },
-    {
-      "src": "/primary-logo-vertical.png",
-      "dest": "/primary-logo-vertical.png"
-    },
-    {
-      "src": "/front.jpg",
-      "dest": "/front.jpg"
-    },
-    {
-      "src": "/logo.png",
-      "dest": "/logo.png"
-    },
-    {
-      "src": ".*",
-      "dest": "/index.html"
-    }
-  ]
-} 
+  "framework": null,
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+}
